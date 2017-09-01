@@ -1,0 +1,58 @@
+{%extends "HomePage/base.html" %}
+
+{% load index %}
+{% load add %}
+
+{%block body%}
+
+
+<center>
+    <table class=table>
+        <thead>
+        <tr>
+
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Form</th>
+            <th>Dues($)</th>
+            {%for header in criteriaHeaders%}
+            
+                <th>{{header.question}}</th>
+            
+            {%endfor%}
+            <th> Attendance </th>
+        </tr>
+        </thead>
+        <tbody>
+            {%for stud in studList%}
+                
+                <tr id = '{{stud.pk}}'> 
+                    <td>{{stud.student.firstName}}</td> 
+                    <td>{{stud.student.lastName}}</td>
+                    <td>{{stud.student.form}}</td>
+                    <td>{{stud.dues}}</td>
+                    {%if criteriaHeaders|length > 0 %}
+                        <td>{{stud.criteria1}}</td>
+                    {%endif%}
+                    
+                    {%if criteriaHeaders|length > 1 %}
+                        <td>{{stud.criteria2}}</td>
+                    {%endif%}
+                    
+                    {%if criteriaHeaders|length > 2 %}
+                        <td>{{stud.criteria3}}</td>
+                    {%endif%}
+                    
+                    <td> {{stud.attendance}} </td>
+                    
+                </tr>
+            {%endfor%}
+        </tbody>
+    </table></center>
+
+                                
+
+
+
+
+{%endblock%}

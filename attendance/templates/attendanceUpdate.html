@@ -1,0 +1,306 @@
+{% extends "HomePage/base.html" %}
+{% load index %}
+{% load add %}
+{% load searchStudents %}
+{% load is_integer %}
+{%block heading%}
+
+<h4> {{club.name}} Attendance Form </h4>
+
+{%endblock%}
+
+
+
+{% block body %}
+      
+    <div id="classSelect" class="container-fluid"> 
+        
+        <div class="row">
+            
+            
+             <div class="col-xs-4" > 
+                
+                 
+                 
+                <select id=classSelector  class="selectpicker" data-size="10" data-container="body" data-width="100%" data-height="40%" style="font-size: 23px; padding: 8px" title="Form"> 
+
+                    {%for form in formList%}
+
+                        <option value={{form.name}} style="padding: 12px">{{form.name}} </option>
+
+                    {%endfor%}
+
+                </select>
+
+                <center>
+                {% for form in formList %}
+                <div id={{form.name}} class="formSelection container-fluid" style="display: none"> 
+                    <h1>{{form.name}}</h1>
+                    {%for stud in studList%}
+
+                         
+                        {%if stud.form.name == form.name%}
+
+                        <button class="btn btn-std" onclick="revealByID('{{stud.pk}}')" style="width:200px">{{stud.firstName}} {{stud.lastName}}</button>
+                        <br>
+                        <br>
+
+                        {%endif%}
+
+                    {%endfor%}
+                </div>
+                {%endfor%}
+                </center>
+            </div>
+
+        
+        <div class="col-xs-8">
+            
+            <form action="{%url 'attended' club.pk%}" method="post">
+                {%csrf_token%}
+                <select id="dateSelector" class="selectpicker" name = "date" data-size="10" data-container="body" data-width="100%" data-height="40%" style="font-size: 23px; padding: 8px" title="Date" required>
+                 
+                    {%for date in dateList%}
+                     <option value="{{date.year}}/{{date.month}}/{{date.day}}" style="padding: 12px">{{clubDay}} {{monthList|index:date.month}} {{date.day}}, {{date.year}} </option>
+                    {%endfor%}
+                     
+                </select>
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th style="display: none">Was Selected?</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Form</th>
+                        <th class="text-center">Dues ($)</th>
+                        {%for criteria in criteriaList%}
+                            {%ifnotequal criteria "None"%}
+                                <th class="text-center">{{criteria}}</th>
+                            {%endifnotequal%}
+                        {%endfor%}
+                        
+                        <th><i class="fa fa-minus-square" aria-hidden="true" style="visibility: hidden"></i> </th>
+                        <th><input id="" type=radio style="display: none"></th>
+
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    
+                    {% for form in formList %}
+
+                                {%for stud in studList%}
+
+
+                                        {%if stud.form.name == form.name%}
+                                        
+                                        <tr id = '{{stud.pk}}' class="hidden"> 
+                                            <td style="display: none"><input id="{{stud.pk}} checkbox" name='{{stud.pk}}' type=radio style="display: none"></td>
+                                            <td>{{stud.firstName}}</td> 
+                                            <td>{{stud.lastName}}</td>
+                                            <td>{{stud.form}}</td>
+                                            <td><input type=number class="{{stud.pk}} Criteria form-control" value=0.00> </td>
+                                            {%for criteria in criteriaList%}
+                                                {%with forloop.counter as criteriaNumber%}
+                                                    {%ifnotequal criteria "None"%}
+
+                                                        {%if criteria.htmlType == "checkbox" %}
+                                                           
+                                                            <td align="center">
+                                                                    
+                                                                        {%for studentRecord in studentRecordList%}
+                                                                            
+                                                                            {%if studentRecord.student.pk == stud.pk%}
+                                                                                
+                                                                                {%if criteriaNumber == 1 and studentRecord.criteria1 == "True" %}
+                                                                                    
+                                                                                    <div class="pretty success circle smooth">
+                                                                                        <input type="checkbox" class="{{stud.pk}} Criteria form-control" name="" value="{{criteria.question}}" checked>
+                                                                                        <label><i class="fa fa-check"></i></label>
+                                                                                    </div>
+                                                                                                                                                             
+                                                                
+                                                                                {%elif criteriaNumber == 2 and studentRecord.criteria2 == "True" %}
+                                                                                    
+                                                                                    <div class="pretty success circle smooth">
+                                                                                        <input type="checkbox" class="{{stud.pk}} Criteria form-control" name="" value="{{criteria.question}}" checked>
+                                                                                        <label><i class="fa fa-check"></i></label>
+                                                                                    </div>
+                                                                                    
+                                                                
+                                                                                    
+                                                                
+                                                                                {%elif criteriaNumber == 3 and studentRecord.criteria3 == "True" %}
+                                                                                    
+                                                                                    <div class="pretty success circle smooth">
+                                                                                        <input type="checkbox" class="{{stud.pk}} Criteria form-control" name="" value="{{criteria.question}}" checked>
+                                                                                        <label><i class="fa fa-check"></i></label>
+                                                                                    </div>
+                                                                                 
+                                                                                {%else%}
+                                                                                    <div class="pretty success circle smooth">
+                                                                                        <input type="checkbox" class="{{stud.pk}} Criteria form-control" name="" value="{{criteria.question}}" >
+                                                                                        <label><i class="fa fa-check"></i></label>
+                                                                                    </div>
+                                                                
+                                                                                    
+                                                                                
+                                                                                
+
+                                                                                {%endif%}
+                                                                            {%endif%}
+                                                                
+                                                                            
+                                                                           
+                                                                        {%endfor%} 
+                                                                        
+                                                                        {%if stud.pk|is_in:pkList == False %}
+                                                                            <div class="pretty success circle smooth">
+                                                                                <input type="checkbox" class="{{stud.pk}} Criteria form-control" name="" value="{{criteria.question}}">
+                                                                                <label><i class="fa fa-check"></i></label>
+                                                                            </div>
+                                                                        {%endif%}
+                                                                        
+                                                                       
+                                                                           
+                                                                
+                                                                       
+                                                                        
+                                                                
+                                                            </td>
+                                                        {%endif%}
+                                                        {%if criteria.htmlType == "number" %}
+
+                                                            <td align="center">
+
+                                                                    <div>
+                                                                        <input class="{{stud.pk}} Criteria form-control" type="number" name="" value=0>
+                                                                    </div>
+
+                                                            </td>
+
+                                                        {%endif%}
+                                                    {%endifnotequal%}
+                                                {%endwith%}
+                                            {%endfor%} 
+                                            <td> <a onclick="hideByID('{{stud.pk}}')")><i class="fa fa-minus-square" aria-hidden="true"></i></a></td>
+                                            
+                                        </tr>
+                                        {%endif%}
+
+                                {%endfor%}
+
+                    {%endfor%}
+                    
+                    </tbody>
+
+                </table>
+                
+                
+                
+                <center><input type=submit class="btn btn-std"></center>
+                
+            </form> 
+        </div> 
+    </div>
+</div>
+<br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+<br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+<br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+<p>dwadoij</p>
+<script>
+            
+    
+    var classSelection = document.getElementById("classSelector");
+    classSelection.addEventListener("change",revealSelection);
+    
+    
+
+    function revealSelection(){
+        hideSelection();
+        document.getElementById(classSelection.value).style.display='block';
+    }
+
+    function hideSelection(){
+        
+        
+        var formSelection = document.getElementsByClassName('formSelection');
+        
+        for(i=0;i<formSelection.length;i++)
+            {
+                formSelection[i].style.display='none';
+            }
+
+    }
+    function hideCriteria(id){
+        
+        var criteriaList = document.getElementsByClassName(id);
+        
+        for(i=0;i<criteriaList.length;i++)
+            {
+                criteriaList[i].name=""
+            }
+        
+    }
+    function revealByID(id){
+
+        document.getElementById(id).className='';
+        document.getElementById(id.concat(' checkbox')).checked=true;
+        revealCriteria(id.concat(" Criteria"));
+    }
+    
+    function revealCriteria(id){
+        
+        var criteriaList = document.getElementsByClassName(id);
+        
+        for(i=0;i<criteriaList.length;i++)
+            {
+                criteriaList[i].name=id
+            }
+    }
+    
+    function hideByID(id){
+        document.getElementById(id).className='hidden'; 
+        document.getElementById(id.concat(' checkbox')).checked=false;
+        hideCriteria(id.concat(" Criteria"));
+
+    }
+    
+
+    
+</script>
+
+                 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/css/bootstrap-select.min.css">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js"></script>
+          <script type="text/javascript">
+               $(document).ready(function() {
+               $('.selectpicker').selectpicker();
+              });
+          </script>
+
+
+{% endblock %}

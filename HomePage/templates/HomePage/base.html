@@ -1,0 +1,102 @@
+  <html>
+    <head>
+        {% load staticfiles %}
+        {% load index %}
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+        <!-- jQuery library -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+        <!-- Latest compiled JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+        
+        
+
+        <link rel="stylesheet" type="text/css" href="{% static 'HomePage/style.css' %}"/>
+        
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pretty-checkbox/2.2.1/pretty.min.css">
+        <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
+        
+
+        
+        <title>Campion College Club Setup Form</title>
+    </head>
+      
+    <body style="height: 100%">
+    
+        <div class="jumbotron" style="background-color: 992626; margin-bottom: -40px;z-index: 20">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-3"> 
+                       
+                        
+                        
+                    </div>
+                    
+                    <div class="col-lg-9">
+                        <br>
+                        <br>
+                        <br>
+                        <center><h1>Campion College Club Management System</h1></center>
+                        <br>
+                    </div>
+                    
+                </div>
+            </div>
+            
+            
+            
+            
+            <h2>
+                <small>
+                
+                </small>
+            </h2>
+            
+            
+        
+        
+        
+       
+        
+        </div>
+        
+        <div class="container-fluid" style="background-color: 820000;  padding-right: 0px; padding-left: 0px;z-index: 20">
+            <div class="container-fluid" style="margin-top: 30px; margin-bottom: 30px; margin-left: 120px;z-index: 20">
+                <div class="container-fluid" style="background-color: 992626;border: 0;">
+                    <ul class="nav navbar-nav">
+                       
+                        <li  style="margin-left: 420px;margin-right: 440px;color: white; position: absolute; top:300px; left: 160">
+                            
+                            
+                            {%block heading%}               
+                            {%endblock%}
+                               
+                        </li>
+                       
+                        <li><a href="#" style="color: white; margin-left: 1240px"><h4>Home </h4></a></li>
+                        
+                        <li><a href="#" style="color: white"><h4>Install Your Club</h4> </a></li>
+                        <li><a href="#" style="color: white"><h4>Attendance</h4> </a></li>
+                        <li><a href="#" style="color: white"><h4>Login</h4> </a> </li>
+                    
+                    </ul>
+
+                </div>
+            </div>
+           
+        </div>
+                   
+        <img class = "img-responsive center-block" src="{%static 'HomePage/logo.png' %}" alt="My image" style="max-width: 35%; height: auto; position: absolute; top: -30px; left: -140px; right: 1500px;z-index: 20" />     
+                        
+        {% block navigation-side %}
+        {% endblock %}
+        
+        {%block body%}
+        {%endblock%}
+    </body>    
+</html>

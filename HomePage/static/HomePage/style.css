@@ -1,0 +1,63 @@
+.jumbotron
+{
+    background-color: firebrick;
+    color: fbecec;
+    text-align: center;
+}
+
+.jumbotron small
+{
+    color: fbecec;   
+}
+
+#submitButton
+{
+    background-color: df3939;
+    border-color: white;
+}
+
+#FormBody
+{
+    background-color: beige;
+}
+
+
+
+#AttrList
+{
+    background-color: df3939;
+    margin-top: 5%;
+    color: white;
+    margin-left: 25%;
+    margin-right: 25%;
+}
+
+#downloadStudentListButton
+{
+    background-color: firebrick;
+    color: white;
+    
+}
+
+input::-webkit-calendar-picker-indicator {
+	display: none;
+}
+
+.center-block {
+    display: block;
+    margin: 0 auto;
+}
+
+ul.nav a:hover {
+    color: white !important; 
+    background-color: 820000 !important;
+}
+ul.nav a:active {
+    color: white !important; 
+    background-color: 820000 !important;
+}
+ul.nav a:focus {
+    color: white !important; 
+    background-color: 820000 !important;
+}
+
